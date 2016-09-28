@@ -43,11 +43,13 @@ class MockApi implements GitHubApi
     {
         $contributors = [
             'Behat' => [
-                'jon'
+                'jon',
+                'everzet',
+
             ],
             'PhpSpec' => [
                 'jon',
-                'everzet'
+                'ciaran'
             ],
             'Prophecy' => [
                 'ciaran',
