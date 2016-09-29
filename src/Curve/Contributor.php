@@ -2,12 +2,12 @@
 
 namespace Curve;
 
-class Contributor
+class Contributor implements ContributorInterface
 {
     /**
-     * @var CoContributors[]
+     * @var Contributor[]
      */
-    private $coContributors = [];
+    private $coContributors = null;
 
     /**
      * @var string
@@ -24,12 +24,10 @@ class Contributor
 
     /**
      * @param string $name
-     * @param CoContributors $coContributors
      */
-    public function __construct($name, CoContributors $coContributors = null)
+    public function __construct($name)
     {
         $this->name = $name;
-        $this->coContributors = $coContributors ?: new CoContributors();
     }
 
     public static function initialize()
@@ -41,23 +39,23 @@ class Contributor
     }
 
     /**
-     * @return CoContributors[]
+     * @return ContributorInterface[]
      */
     public function getCoContributors()
     {
-        return $this->coContributors->all($this->name);
+        return $this->coContributors;
     }
 
     /**
-     * @param Contributor $contributor
+     * @param ContributorInterface $contributor
      *
      * @return integer
      */
-    public function distance(Contributor $contributor)
+    public function distance(ContributorInterface $contributor)
     {
         array_push(self::$pathTaken, $this);
 
-        foreach ($this->getCoContributors() as $k => $coContributor) {
+        foreach ($this->coContributors as $k => $coContributor) {
 
             self::$distance += (int)($k === 0);
 
@@ -67,14 +65,14 @@ class Contributor
                     return min(self::$shortestDistance, self::$distance);
                 }
 
-                self::$found[] = $contributor->name;
+                self::$found[] = $contributor->getName();
                 self::$shortestDistance = self::$distance;
 
                 return array_pop(self::$pathTaken)->distance($contributor);
             }
         }
 
-        foreach ($this->getCoContributors() as $coContributor) {
+        foreach ($this->coContributors as $coContributor) {
             $coContributor->distance($contributor);
         }
 
@@ -82,20 +80,36 @@ class Contributor
     }
 
     /**
-     * @param Contributor $contributor
+     * @param ContributorInterface $contributor
      * @return bool
      */
-    public function matches(Contributor $contributor)
+    public function matches(ContributorInterface $contributor)
     {
-        return $this->name === $contributor->name;
+        return $this->name === $contributor->getName();
     }
 
     /**
-     * @param Contributor $contributor
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param ContributorInterface[] $contributors
+     */
+    public function setCoContributors(array $contributors)
+    {
+        $this->coContributors = $contributors;
+    }
+
+    /**
+     * @param ContributorInterface $contributor
      * @return bool
      */
-    private function wasFoundBefore(Contributor $contributor)
+    private function wasFoundBefore(ContributorInterface $contributor)
     {
-        return in_array($contributor->name, self::$found);
+        return in_array($contributor->getName(), self::$found);
     }
 }

@@ -3,7 +3,13 @@ use Curve\PathFinder;
 
 require_once 'vendor/autoload.php';
 
-$finder = new PathFinder();
+use Curve\Contributor\LazyContributorFactory;
+use Curve\Github\Loader;
+use Curve\Github\MockApi;
+
+$contributorFactory = new LazyContributorFactory(new Loader(new MockApi()));
+
+$finder = new PathFinder($contributorFactory);
 
 expect($finder->distanceFrom('ciaran')->to('jon'))->toBe(1);
 expect($finder->distanceFrom('christoph')->to('sam'))->toBe(2);

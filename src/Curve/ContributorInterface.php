@@ -1,15 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jacker
- * Date: 28/09/2016
- * Time: 12:50
- */
 
 namespace Curve;
 
-
 interface ContributorInterface
 {
+    /**
+     * @param ContributorInterface $contributor
+     *
+     * @return integer
+     */
+    public function distance(ContributorInterface $contributor);
 
+    /**
+     * @param ContributorInterface $contributorInterface
+     *
+     * @return boolean
+     */
+    public function matches(ContributorInterface $contributor);
+
+    /**
+     * @return string
+     */
+    public function getName();
+
+    /**
+     * @return ContributorInterface[]
+     */
+    public function getCoContributors();
 }

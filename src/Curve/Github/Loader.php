@@ -3,6 +3,7 @@
 namespace Curve\Github;
 
 use Curve\Contributor;
+use Curve\Contributor\LazyContributor;
 
 class Loader
 {
@@ -27,6 +28,7 @@ class Loader
     public static function initialize()
     {
         self::$processedProjects = [];
+
     }
 
     /**
@@ -46,7 +48,7 @@ class Loader
             }
 
             $coContributors += array_map(function($name) {
-                return new Contributor($name);
+                return new LazyContributor(new Contributor($name), $this);
             }, $this->api->getContributorsFor($project));;
 
             self::$processedProjects[] = $project;

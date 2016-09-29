@@ -7,31 +7,18 @@ class MockApi implements GitHubApi
     public function getRepositoriesContributedToBy($contributor)
     {
         $repositories = [
-            'seladek' => [
-                'Composer',
-                'Monolog'
-            ],
-            'christoph' => [
-                'PhpSpec',
-                'Prophecy',
-            ],
             'everzet' => [
                 'Behat',
                 'Prophecy'
             ],
             'ciaran' => [
-                'Behat',
-                'PhpSpec'
+                'Behat'
             ],
             'jon' => [
                 'Composer'
             ],
             'marcello' => [
-                'PhpSpec',
-                'Composer'
-            ],
-            'sam' => [
-                'Tolerance'
+
             ]
         ];
 
@@ -44,24 +31,13 @@ class MockApi implements GitHubApi
         $contributors = [
             'Behat' => [
                 'jon',
-                'everzet',
-
-            ],
-            'PhpSpec' => [
-                'jon',
-                'ciaran'
-            ],
-            'Prophecy' => [
                 'ciaran',
-            ],
-            'Composer' => [
-                'sam',
                 'marcello'
             ],
-            'Tolerance' => [
-
+            'Composer' => [
+                'marcello'
             ],
-            'Monolog' => [
+            'Prophecy' => [
 
             ]
         ];
